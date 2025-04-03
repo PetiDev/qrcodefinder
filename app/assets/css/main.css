@@ -18,12 +18,17 @@ a::after{
     transition: 300ms ease-out transform;
 }
 
-a:hover::after{
+a:hover::after, a:focus-within::after{
     transform-origin: left;
     transform: scaleX(1);
 }
 @media (max-width: 980px) {
     :root{
         --spacer: 1rem;
+    }
+}
+@media (min-width: 1980px) {
+    :root{
+        --spacer: calc(1vw / .03);
     }
 }
