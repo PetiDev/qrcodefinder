@@ -5,5 +5,14 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  components:[
+    {
+      path: '~/components',
+      pathPrefix: false,
+    }
+  ],
+  css:[
+    "~/assets/css/main.css"
+  ],
   modules: ['@nuxt/icon']
 })
