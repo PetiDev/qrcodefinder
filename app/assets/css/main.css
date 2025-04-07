@@ -3,6 +3,7 @@
     --primary: #fdd700;
 
     color-scheme: dark;
+    font-family: sans-serif;
 }
 
 * {
@@ -36,6 +37,10 @@ a:hover::after,
 a:focus-within::after {
     transform-origin: left;
     transform: scaleX(1);
+}
+
+a:visited{
+    color: unset;
 }
 
 a:active {

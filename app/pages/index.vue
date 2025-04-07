@@ -1,8 +1,9 @@
 <template>
     <div>
-        <h1>Lusta vagyok több mindent ide írni most</h1>
         <NuxtRouteAnnouncer />
-        <NuxtWelcome />
+        <h1>Lusta vagyok több mindent ide írni most</h1>
+
     </div>
 </template>
-<script setup></script>
+<script setup>
+</script>

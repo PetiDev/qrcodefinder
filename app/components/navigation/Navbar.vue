@@ -1,12 +1,11 @@
 <template>
     <nav>
         <NuxtLink to="/">
-            <h2>Home</h2>
+            <h2>QRfort</h2>
         </NuxtLink>
         <div>
-            <NuxtLink to="/">asd</NuxtLink>
-            <NuxtLink to="/">asd</NuxtLink>
-            <NuxtLink to="/">asd</NuxtLink>
+            <NuxtLink to="/qrcode/scan">Scan</NuxtLink>
+            <NuxtLink to="/">Lista</NuxtLink>
         </div>
     </nav>
 </template>
