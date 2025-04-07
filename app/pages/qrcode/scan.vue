@@ -4,11 +4,7 @@
       A qrkód beolvasásához használt kamera
 
       <select v-model="selectedConstraints">
-        <option
-          v-for="option in constraintOptions"
-          :key="option.label"
-          :value="option.constraints"
-        >
+        <option v-for="option in constraintOptions" :key="option.label" :value="option.constraints">
           {{ option.label }}
         </option>
       </select>
@@ -23,19 +19,13 @@
     </p>
 
     <div>
-      <qrcode-stream
-        :constraints="selectedConstraints"
-        :track="trackFunctionSelected.value"
-        :formats="selectedBarcodeFormats"
-        @error="onError"
-        @detect="onDetect"
-        @camera-on="onCameraReady"
-      />
+      <qrcode-stream :constraints="selectedConstraints" :track="trackFunctionSelected.value"
+        :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect" @camera-on="onCameraReady" />
     </div>
   </div>
 </template>
 
-<script setup >
+<script setup>
 import { ref, computed } from 'vue'
 
 
@@ -45,10 +35,16 @@ import { ref, computed } from 'vue'
 
 const result = ref('')
 
+const { data, status, refresh } = await useFetch(() => `/api/qrcode/validate/${result.value}/`, {
+  transform: r => r.data,
+  immediate: false,
+})
 
 async function onDetect(detectedCodes) {
-  console.log(detectedCodes)
   result.value = detectedCodes.map((code) => code.rawValue)[0]
+
+  await refresh()
+  console.log(data.value);
 
 }
 
@@ -145,6 +141,7 @@ function onError(err) {
   font-weight: bold;
   color: red;
 }
+
 .barcode-format-checkbox {
   margin-right: 10px;
   white-space: nowrap;
