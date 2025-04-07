@@ -1,6 +1,7 @@
 :root {
     --spacer: calc(1vw / .05);
     --primary: #fdd700;
+    --clr-ok: #76ca07;
 
     color-scheme: dark;
     font-family: sans-serif;
