@@ -12,42 +12,41 @@
 
 
 
-    <p class="error">{{ errors }}</p>
+    <p class="error">{{ error }}</p>
 
     <p class="decode-result">
       Last result: <b>{{ result }}</b>
     </p>
 
     <div>
-      <qrcode-stream :constraints="selectedConstraints" :track="trackFunctionSelected.value"
+      <qrcode-stream v-if="!data?.isValid" :constraints="selectedConstraints" :track="trackFunctionSelected.value"
         :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect" @camera-on="onCameraReady" />
     </div>
-
-    <Toast v-if="data" title="Siker" content="Qrkód sikeresen beolvasva"/>
+    <Toast v-if="status === 'success' && data?.isValid" title="Siker" content="Qrkód sikeresen beolvasva"
+      :time-to-die="timeToDie" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 
-
-
+const timeToDie = 5000;
 
 /*** detection handling ***/
 
 const result = ref('')
 
-const { data, status, refresh } = await useFetch(() => `/api/qrcode/validate/${result.value}/`, {
+const { data, status, refresh, clear } = await useFetch(() => `/api/qrcode/validate/${result.value}/`, {
   transform: r => r.data,
   immediate: false,
+  default: () => { return { isValid: false } }
 })
 
 async function onDetect(detectedCodes) {
   result.value = detectedCodes.map((code) => code.rawValue)[0]
 
   await refresh()
-  console.log(data.value);
-
+  setTimeout(clear, timeToDie)
 }
 
 /*** select camera ***/
@@ -75,7 +74,7 @@ async function onCameraReady() {
     }))
   ]
 
-  errors.value = ''
+  error.value = ''
 }
 
 /*** track functons ***/
@@ -115,25 +114,25 @@ const selectedBarcodeFormats = computed(() => {
 const error = ref('')
 
 function onError(err) {
-  errors.value = `[${err.name}]: `
+  error.value = `[${err.name}]: `
 
   if (err.name === 'NotAllowedError') {
-    errors.value += 'kamera-hozzáférési engedélyt kell adnia'
+    error.value += 'kamera-hozzáférési engedélyt kell adnia'
   } else if (err.name === 'NotFoundError') {
-    errors.value += 'nincs kamera ezen az eszközön'
+    error.value += 'nincs kamera ezen az eszközön'
   } else if (err.name === 'NotSupportedError') {
-    errors.value += 'biztonságos környezet szükséges (HTTPS, localhost)'
+    error.value += 'biztonságos környezet szükséges (HTTPS, localhost)'
   } else if (err.name === 'NotReadableError') {
-    errors.value += 'a kamera már használatban van?'
+    error.value += 'a kamera már használatban van?'
   } else if (err.name === 'OverconstrainedError') {
-    errors.value += 'a telepített kamerák nem megfelelőek'
+    error.value += 'a telepített kamerák nem megfelelőek'
   } else if (err.name === 'StreamApiNotSupportedError') {
-    errors.value += 'A Stream API nem támogatott ebben a böngészőben'
+    error.value += 'A Stream API nem támogatott ebben a böngészőben'
   } else if (err.name === 'InsecureContextError') {
-    errors.value +=
+    error.value +=
       'A kamerához való hozzáférés csak biztonságos környezetben engedélyezett. A HTTP helyett használjon HTTPS-t vagy localhost-ot.'
   } else {
-    errors.value += err.message
+    error.value += err.message
   }
 }
 </script>

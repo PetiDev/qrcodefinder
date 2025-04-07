@@ -1,11 +1,11 @@
 <template>
-    <div id="toast" ref="toastRef" @mouseenter="mouseEnterToast" @mouseleave="mouseLeaveToast">
+    <div id="toast" ref="toastRef">
         <h1>{{ title }}</h1>
         <h3>{{ content }}</h3>
     </div>
 </template>
 <script setup lang="ts">
-const { title, content } = defineProps({
+const { title, content, timeToDie } = defineProps({
     "title": {
         required: true,
         type: String
@@ -13,75 +13,25 @@ const { title, content } = defineProps({
     "content": {
         default: "",
         type: String
+    },
+    "timeToDie": {
+        type: Number,
+        required: true
     }
 })
 
 const toastRef = ref<HTMLDivElement>()
 
 
-
-const timeToDie = 2000;
-
 let dieTime: number;
 
-
-onMounted(()=>{
-    toastRef.value?.animate(
-    [
-        {
-            width: "calc(100% - 2*var(--padding))"
-        },
-        {
-            width: "0%"
-        }
-    ], {
-    pseudoElement: "::after",
-    duration: timeToDie
+const die = () => {
+    toastRef.value?.remove();
 }
-);
 
-dieTime = setTimeout(() => {
-    toastRef.value?.remove()
-}, timeToDie)
+onMounted(() => {
+    dieTime = setTimeout(() => die, timeToDie)
 })
-
-
-const mouseEnterToast = () => {
-    clearTimeout(dieTime)
-    toastRef.value?.animate(
-        [
-            {
-                width: "0%"
-            },
-            {
-                width: "calc(100% - 2*var(--padding))"
-            }
-        ], {
-        pseudoElement: "::after",
-        duration: 1,
-        fill: "forwards"
-    }
-    );
-}
-const mouseLeaveToast = () => {
-    dieTime = setTimeout(() => {
-        toastRef.value?.remove()
-    }, timeToDie)
-    toastRef.value?.animate(
-        [
-            {
-                width: "calc(100% - 2*var(--padding))"
-            },
-            {
-                width: "0%"
-            }
-        ], {
-        pseudoElement: "::after",
-        duration: timeToDie
-    }
-    );
-
-}
 
 </script>
 <style>
@@ -92,16 +42,5 @@ const mouseLeaveToast = () => {
     padding: var(--padding);
     border-radius: 20px;
     width: 20rem;
-    position: relative;
-}
-
-#toast::after {
-    content: '';
-    width: calc(100% - 2*var(--padding));
-    height: .2rem;
-    background-color: var(--primary);
-    position: absolute;
-    left: var(--padding);
-    bottom: 0;
 }
 </style>
