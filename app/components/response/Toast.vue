@@ -1,5 +1,5 @@
 <template>
-    <div id="toast" ref="toastRef" @mouseenter="mouseEnterToast" @mouseleave="mouseLeaveToast" @load="toastLoaded">
+    <div id="toast" ref="toastRef" @mouseenter="mouseEnterToast" @mouseleave="mouseLeaveToast">
         <h1>{{ title }}</h1>
         <h3>{{ content }}</h3>
     </div>
@@ -24,30 +24,27 @@ const timeToDie = 2000;
 
 let dieTime: number;
 
-const toastLoaded = () => {
 
-    console.log("asd");
-    
-
+onMounted(()=>{
     toastRef.value?.animate(
-        [
-            {
-                width: "calc(100% - 2*var(--padding))"
-            },
-            {
-                width: "0%"
-            }
-        ], {
-        pseudoElement: "::after",
-        duration: timeToDie
-    }
-    );
+    [
+        {
+            width: "calc(100% - 2*var(--padding))"
+        },
+        {
+            width: "0%"
+        }
+    ], {
+    pseudoElement: "::after",
+    duration: timeToDie
+}
+);
 
-    dieTime = setTimeout(() => {
+dieTime = setTimeout(() => {
     toastRef.value?.remove()
 }, timeToDie)
+})
 
-}
 
 const mouseEnterToast = () => {
     clearTimeout(dieTime)

@@ -22,6 +22,8 @@
       <qrcode-stream :constraints="selectedConstraints" :track="trackFunctionSelected.value"
         :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect" @camera-on="onCameraReady" />
     </div>
+
+    <Toast v-if="data" title="Siker" content="Qrkód sikeresen beolvasva"/>
   </div>
 </template>
 
