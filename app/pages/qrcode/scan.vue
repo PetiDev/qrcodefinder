@@ -14,15 +14,13 @@
 
     <p class="error">{{ error }}</p>
 
-    <p class="decode-result">
-      Last result: <b>{{ result }}</b>
-    </p>
-
     <div>
-      <qrcode-stream v-if="!data?.isValid" :constraints="selectedConstraints" :track="trackFunctionSelected.value"
+      <qrcode-stream v-if="status !== 'success'" :constraints="selectedConstraints" :track="trackFunctionSelected.value"
         :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect" @camera-on="onCameraReady" />
     </div>
-    <Toast v-if="status === 'success' && data?.isValid" title="Siker" content="Qrkód sikeresen beolvasva"
+    <Toast v-if="status === 'success' && data?.isValid" class="ok" title="Siker" content="Qrkód sikeresen beolvasva"
+      :time-to-die="timeToDie" />
+    <Toast v-if="status === 'success' && !data?.isValid" class="bad" title="Sikertelen" content="Beolvasott kód nem helyes"
       :time-to-die="timeToDie" />
   </div>
 </template>
@@ -143,9 +141,4 @@ function onError(err) {
   color: red;
 }
 
-.barcode-format-checkbox {
-  margin-right: 10px;
-  white-space: nowrap;
-  display: inline-block;
-}
 </style>

@@ -38,9 +38,16 @@ onMounted(() => {
 #toast {
     --padding: 1rem;
     font-size: .8rem;
-    background-color: var(--clr-ok);
     padding: var(--padding);
     border-radius: 20px;
     width: 20rem;
+}
+
+.ok {
+    background-color: var(--clr-ok);
+}
+
+.bad {
+    background-color: rgb(141, 34, 34);
 }
 </style>
