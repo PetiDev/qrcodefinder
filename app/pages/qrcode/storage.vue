@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="cont">
         <p>Megtalált qrkódok száma: {{ qrcodes.length }}</p>
         <div class="qrco" v-for="qrcode in qrcodes">
             {{ qrcode }}
@@ -19,5 +19,10 @@ const qrcodes = getAll()
     padding-block: 1rem;
 
     font-size: 3rem;
+}
+.cont {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 </style>
