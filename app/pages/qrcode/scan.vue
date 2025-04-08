@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Button @click="asd">aasdasdasd</Button>
     <p>
       A qrkód beolvasásához használt kamera
 
@@ -27,9 +28,14 @@
 
 <script setup>
 //TODO
-const {auth} = useAuth()
-auth({id:"asdads"})
+const {auth, token} = useAuth()
 
+if (!token.value) {
+  auth()
+}
+const asd = () => {
+  token.value = ""
+}
 
 const timeToDie = 5000;
 

@@ -14,10 +14,7 @@ export default defineNuxtConfig({
   css:[
     "~/assets/css/main.css"
   ],
-  modules: [
-    '@nuxt/icon',
-    'nuxt-qrcode'
-  ],
+  modules: ['@nuxt/icon', 'nuxt-qrcode', '@prisma/nuxt'],
   runtimeConfig:{
     JWT_SECRET: process.env.JWT_SECRET
   }

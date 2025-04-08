@@ -6,3 +6,13 @@ Content-Type: application/json
 {
     "id":"asd"
 }
+
+###
+
+PUT {{url}}/qrcode HTTP/1.1
+
+###
+
+GET {{url}}/qrcode HTTP/1.1
+
+###

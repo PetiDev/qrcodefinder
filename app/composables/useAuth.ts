@@ -3,12 +3,9 @@ export const useAuth = () => {
         sameSite: "strict"
     })
 
-    const auth = async (authData: authRequest) => {
+    const auth = async () => {
         await $fetch("/api/auth/", {
-            method: "POST",
-            body: {
-                ...authData
-            }
+            method: "GET"
         })
             .then(body => token.value = body.token)
             .catch(() => token.value = "")
