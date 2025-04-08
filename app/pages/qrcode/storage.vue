@@ -1,7 +1,7 @@
 <template>
     <div>
-        <p>Megtalált qrkódok száma {{ qrcodes.length }}</p>
-        <div v-for="qrcode in qrcodes">
+        <p>Megtalált qrkódok száma: {{ qrcodes.length }}</p>
+        <div class="qrco" v-for="qrcode in qrcodes">
             {{ qrcode }}
         </div>
     </div>
@@ -11,3 +11,13 @@
 const { getAll } = useQrcodeStorage()
 const qrcodes = getAll()
 </script>
+<style scoped>
+.qrco{
+    background-color: var(--clr-ok);
+    border-radius: 25px;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+
+    font-size: 3rem;
+}
+</style>

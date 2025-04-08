@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
 
 
-  const words = ["meow", "me", "wowo"]
+  const words = ["trefort", "sakk", "póker", "blackjack", "kötélhúzás", "darts"]
 
 
   return {
