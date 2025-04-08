@@ -18,6 +18,7 @@ export const useQrcodeStorage = () => {
 
     const appendQrcode = (id: string) => {
         readLocalStorage()
+        if(qrcodes.includes(id))return
         qrcodes.push(id)
         saveToLocalstorage()
     }
