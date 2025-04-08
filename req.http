@@ -1,18 +1,1 @@
 @url=http://localhost:3000/api
-
-POST {{url}}/auth HTTP/1.1
-Content-Type: application/json
-
-{
-    "id":"asd"
-}
-
-###
-
-PUT {{url}}/qrcode HTTP/1.1
-
-###
-
-GET {{url}}/qrcode HTTP/1.1
-
-###

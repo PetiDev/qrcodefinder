@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Button @click="asd">aasdasdasd</Button>
     <p>
       A qrkód beolvasásához használt kamera
 
@@ -16,27 +15,20 @@
     <p class="error">{{ error }}</p>
 
     <div>
-      <qrcode-stream v-if="status !== 'success' && status !== 'error'" :constraints="selectedConstraints" :track="trackFunctionSelected.value"
-        :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect" @camera-on="onCameraReady" />
+      <qrcode-stream v-if="status !== 'success' && status !== 'error'" :constraints="selectedConstraints"
+        :track="trackFunctionSelected.value" :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect"
+        @camera-on="onCameraReady" />
     </div>
     <Toast v-if="status === 'success' && data?.isValid" class="ok" title="Siker" content="Qrkód sikeresen beolvasva"
       :time-to-die="timeToDie" />
-    <Toast v-if="status === 'error' && !data?.isValid" class="bad" :title="requesterror.statusCode" :content="requesterror.statusMessage"
+    <Toast v-if="status === 'error'" class="bad" :title="requesterror.statusCode" :content="requesterror.statusMessage"
+      :time-to-die="timeToDie" />
+    <Toast v-if="status === 'success' && !data?.isValid" class="bad" title="Nop" content="Nem elfogadható QRcode"
       :time-to-die="timeToDie" />
   </div>
 </template>
 
 <script setup>
-//TODO
-const {auth, token} = useAuth()
-
-if (!token.value) {
-  auth()
-}
-const asd = () => {
-  token.value = ""
-}
-
 const timeToDie = 5000;
 
 /*** detection handling ***/
@@ -49,11 +41,20 @@ const { data, status, refresh, clear, error: requesterror } = await useFetch(() 
   default: () => { return { isValid: false } }
 })
 
+const {appendQrcode} = useQrcodeStorage()
+
 async function onDetect(detectedCodes) {
   result.value = detectedCodes.map((code) => code.rawValue)[0]
 
   await refresh()
   setTimeout(clear, timeToDie)
+
+  if (status.value !== "success") return;
+  console.log("asdasdsad", data.value.isValid);
+  if (data.value.isValid) {
+  
+    appendQrcode(result.value)
+  }
 }
 
 /*** select camera ***/
@@ -149,5 +150,4 @@ function onError(err) {
   font-weight: bold;
   color: red;
 }
-
 </style>

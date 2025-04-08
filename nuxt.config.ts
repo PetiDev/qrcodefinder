@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  ssr: false,
   future: {
     compatibilityVersion: 4,
   },
@@ -14,7 +15,7 @@ export default defineNuxtConfig({
   css:[
     "~/assets/css/main.css"
   ],
-  modules: ['@nuxt/icon', 'nuxt-qrcode', '@prisma/nuxt'],
+  modules: ['@nuxt/icon', 'nuxt-qrcode'],
   runtimeConfig:{
     JWT_SECRET: process.env.JWT_SECRET
   }

@@ -5,7 +5,7 @@
         </NuxtLink>
         <div>
             <NuxtLink to="/qrcode/scan">Scan</NuxtLink>
-            <NuxtLink to="/">Lista</NuxtLink>
+            <NuxtLink to="/qrcode/storage">Lista</NuxtLink>
         </div>
     </nav>
 </template>
