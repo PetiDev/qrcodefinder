@@ -17,5 +17,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/icon',
     'nuxt-qrcode'
-  ]
+  ],
+  runtimeConfig:{
+    JWT_SECRET: process.env.JWT_SECRET
+  }
 })

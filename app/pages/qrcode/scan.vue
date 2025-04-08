@@ -15,18 +15,21 @@
     <p class="error">{{ error }}</p>
 
     <div>
-      <qrcode-stream v-if="status !== 'success'" :constraints="selectedConstraints" :track="trackFunctionSelected.value"
+      <qrcode-stream v-if="status !== 'success' && status !== 'error'" :constraints="selectedConstraints" :track="trackFunctionSelected.value"
         :formats="selectedBarcodeFormats" @error="onError" @detect="onDetect" @camera-on="onCameraReady" />
     </div>
     <Toast v-if="status === 'success' && data?.isValid" class="ok" title="Siker" content="Qrkód sikeresen beolvasva"
       :time-to-die="timeToDie" />
-    <Toast v-if="status === 'success' && !data?.isValid" class="bad" title="Sikertelen" content="Beolvasott kód nem helyes"
+    <Toast v-if="status === 'error' && !data?.isValid" class="bad" :title="requesterror.statusCode" :content="requesterror.statusMessage"
       :time-to-die="timeToDie" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+//TODO
+const {auth} = useAuth()
+auth({id:"asdads"})
+
 
 const timeToDie = 5000;
 
@@ -34,7 +37,7 @@ const timeToDie = 5000;
 
 const result = ref('')
 
-const { data, status, refresh, clear } = await useFetch(() => `/api/qrcode/validate/${result.value}/`, {
+const { data, status, refresh, clear, error: requesterror } = await useFetch(() => `/api/qrcode/validate/${result.value}/`, {
   transform: r => r.data,
   immediate: false,
   default: () => { return { isValid: false } }
