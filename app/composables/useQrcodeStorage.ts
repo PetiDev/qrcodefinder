@@ -17,6 +17,7 @@ export const useQrcodeStorage = () => {
     }
 
     const appendQrcode = (id: string) => {
+        readLocalStorage()
         qrcodes.push(id)
         saveToLocalstorage()
     }
