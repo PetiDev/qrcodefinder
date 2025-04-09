@@ -68,9 +68,6 @@
     .body-1 {
       font-size: 14px; /* Further reduce font size on very small screens */
     }
-  
-    .body-2 {
-      font-size: 12px; /* Further reduce font size on very small screens */
-    }
+
   }
   </style>
