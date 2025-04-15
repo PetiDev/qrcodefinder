@@ -3,7 +3,7 @@
         <div class="container">
             <div class="card">
                 <h5 >Megtalált QR-kódok</h5>
-                <p class="body-1">Száma: {{ qrcodes.length }}</p>
+                <p class="body-1" {{ qrcodes.length }} / 6</p>
             </div>
 
             <div class="qrcode-list">
